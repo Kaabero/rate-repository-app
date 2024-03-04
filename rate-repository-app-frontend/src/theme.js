@@ -6,7 +6,8 @@ const theme = {
       appBar: '#ffffff'
     },
     backroundColors: {
-        appBar:'#24292e'
+        appBar:'#24292e',
+        languageTag:'#0366d6' 
     },
     fontSizes: {
       body: 14,

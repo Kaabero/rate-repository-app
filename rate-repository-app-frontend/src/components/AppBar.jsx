@@ -6,14 +6,14 @@ const styles = StyleSheet.create({
   container: {
     paddingTop: Constants.statusBarHeight,
     paddingBottom: 20,
-    backgroundColor: theme.backroundColors.AppBar,
+    backgroundColor: theme.backroundColors.appBar,
     
     
     
   },
   appBar: {
     paddingTop: Constants.statusBarHeight,
-    paddingBottom: 20,
+    paddingBottom: 30,
     backgroundColor: theme.backroundColors.appBar,
     fontSize: theme.fontSizes.appBar,
     color: theme.colors.appBar,
