@@ -2,6 +2,7 @@ import { TextInput, Pressable, View, StyleSheet } from 'react-native';
 import { useFormik } from 'formik';
 import theme from '../theme';
 import Text from './Text';
+import * as yup from 'yup';
 
 const initialValues = {
   username: '',
@@ -16,6 +17,8 @@ const styles = StyleSheet.create({
       marginHorizontal: 16,
       borderWidth: 2,
       backgroundColor: 'white',
+      
+
     },
     singInButton: {
       backgroundColor: theme.colors.primary,
@@ -23,35 +26,52 @@ const styles = StyleSheet.create({
       width: 355,
       paddingVertical: 7,
     },
-    inputFields: {
+    inputField: {
         borderWidth: 1,
         width: 355,
         paddingVertical: 7,
         textAlignVertical: 'auto',
+        marginBottom:10
         
         
     },
     textField: {
         marginLeft: 10
-    }
+    },
+    errorField: {
+        borderColor: '#d73a4a', 
+      },
 })
+
+const validationSchema = yup.object().shape({
+    username: yup
+      .string()
+      .required('Username is required'),
+    password: yup
+      .string()
+      .required('Password is required'),
+});
 
 const SignInForm = ({ onSubmit }) => {
   const formik = useFormik({
     initialValues,
     onSubmit,
+    validationSchema,
   });
 
   return (
     <View style={styles.container}>
-      <View style={styles.inputFields}>
+      <View style={[styles.inputField, formik.touched.username && formik.errors.username && styles.errorField]}>
         <TextInput style={styles.textField}
           placeholder="Username"
           value={formik.values.username}
           onChangeText={formik.handleChange('username')}
         />
       </View>
-      <View style={styles.inputFields}>
+      {formik.touched.username && formik.errors.username && (
+        <Text style={{ color: '#d73a4a' }}>{formik.errors.username}</Text>
+      )}
+      <View style={[styles.inputField, formik.touched.password && formik.errors.password && styles.errorField]}>
         <TextInput style={styles.textField}
           placeholder="Password"
           value={formik.values.password}
@@ -59,6 +79,11 @@ const SignInForm = ({ onSubmit }) => {
           onChangeText={formik.handleChange('password')}
         />
       </View>
+      {formik.touched.password && formik.errors.password && (
+        
+        <Text style={{ color: '#d73a4a' }}>{formik.errors.password}</Text>
+        
+      )}
       <View style={styles.singInButton}>
         <Pressable onPress={formik.handleSubmit}>
             <Text color='button' textAlignment='center'>Sign in</Text>
