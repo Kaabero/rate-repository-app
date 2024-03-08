@@ -5,10 +5,10 @@ import { ApolloProvider } from '@apollo/client';
 import createApolloClient from './src/utils/apolloClient';
 import Constants from 'expo-constants';
 
-const apolloClient = createApolloClient();
+const apolloClient = createApolloClient(Constants.expoConfig.extra.APOLLO_URI);
 
 const App = () => {
-  console.log(Constants.expoConfig);
+  
   return (
     <>
       <NativeRouter>
