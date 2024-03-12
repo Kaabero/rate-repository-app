@@ -28,25 +28,4 @@ class AuthStorage {
 }
 
 
-const testi = async () => {
-    const tokenA = new AuthStorage('StorageA');
-    const tokenB = new AuthStorage('StorageB');
-  
-    await tokenA.setAccessToken('aaa');
-    await tokenB.setAccessToken('bbb');
-  
-  
-    const tokenforA = await tokenA.getAccessToken();
-    const tokenforB  = await tokenB.getAccessToken();
-  
-    console.log(tokenforA, tokenforB);
-  
-    await tokenA.removeAccessToken();
-    await tokenB.removeAccessToken();
-
-    console.log(tokenforA, tokenforB);
-  };
-  
-  testi();
-
 export default AuthStorage;
