@@ -1,95 +1,120 @@
-import React from 'react';
-import { View, StyleSheet, Image } from 'react-native';
-import Text from './Text';
+import { View, Image, StyleSheet } from 'react-native';
+
 import theme from '../theme';
+import Text from './Text';
+import formatInThousands from '../utils/formatInThousands';
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    padding: 10,
-    marginVertical: 8,
-    marginHorizontal: 16,
-    borderWidth: 2,
     backgroundColor: 'white',
+    padding: 15,
   },
-
-  languageTag: {
-    backgroundColor: theme.colors.primary,
-    color: 'white',
-    paddingHorizontal: 5,
-    paddingVertical: 2,
-    borderRadius: 5,
-    marginRight: 170
+  topContainer: {
+    flexDirection: 'row',
+    marginBottom: 15,
   },
-
-  textContainer: {
-    flexDirection: 'column', 
-    marginLeft: 10,
-    marginRight: 100,
-  },
-  title: {
-    fontSize: 16,
-    marginBottom: 5,
-  },
-  avatar: {
-    width: 80,
-    height: 80,
-    marginRight: 10,
-  },
-  tableContainer: {
-    marginTop: 60,
-    marginLeft: -100,
-    flexGrow: 1,
+  bottomContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
   },
-
+  avatarContainer: {
+    flexGrow: 0,
+    marginRight: 20,
+  },
+  contentContainer: {
+    flexGrow: 1,
+    flexShrink: 1,
+  },
+  nameText: {
+    marginBottom: 5,
+  },
+  descriptionText: {
+    flexGrow: 1,
+  },
+  avatar: {
+    width: 45,
+    height: 45,
+    borderRadius: theme.roundness,
+  },
+  countItem: {
+    flexGrow: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 15,
+  },
+  countItemCount: {
+    marginBottom: 5,
+  },
+  languageContainer: {
+    marginTop: 10,
+    flexDirection: 'row',
+  },
+  languageText: {
+    color: 'white',
+    backgroundColor: theme.colors.primary,
+    borderRadius: theme.roundness,
+    flexGrow: 0,
+    paddingVertical: 3,
+    paddingHorizontal: 6,
+  },
 });
 
-const numberModificator = (number) => {
-  if (number >= 1000) {
-    return (number / 1000).toFixed(1) + 'k';
-  }
-  return number;
+const CountItem = ({ label, count }) => {
+  return (
+    <View style={styles.countItem}>
+      <Text style={styles.countItemCount} fontWeight="bold">
+        {formatInThousands(count)}
+      </Text>
+      <Text color="textSecondary">{label}</Text>
+    </View>
+  );
 };
 
-const Info = ({ stars, forks, reviews, rating }) => (        
-        <View style={styles.tableContainer}>
-          <View>
-            <Text color='textSecondary' fontWeight='bold'>{numberModificator(stars)}</Text>
-            <Text>Stars</Text>
-          </View>
-          <View>
-            <Text color='textSecondary' fontWeight='bold'>{numberModificator(forks)}</Text>
-            <Text>Forks</Text>
-          </View>
-          <View>
-            <Text color='textSecondary' fontWeight='bold'>{numberModificator(reviews)}</Text>
-            <Text>Reviews</Text>
-          </View>
-          <View>
-            <Text color='textSecondary' fontWeight='bold'>{numberModificator(rating)}</Text>
-            <Text>Rating</Text>
-          </View>
+const RepositoryItem = ({ repository }) => {
+  const {
+    fullName,
+    description,
+    language,
+    forksCount,
+    stargazersCount,
+    ratingAverage,
+    reviewCount,
+    ownerAvatarUrl,
+  } = repository;
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.topContainer}>
+        <View style={styles.avatarContainer}>
+          <Image source={{ uri: ownerAvatarUrl }} style={styles.avatar} />
         </View>
-);
-
-const Header = ({ name, description, language, stars, forks, reviews, rating, }) => (    
-    <View style={styles.textContainer}>
-      <Text fontWeight='bold' fontSize='subheading'>{name}</Text>
-      <Text style={styles.title}>{description}</Text>
-      <Text style={styles.languageTag}>{language}</Text>
-
-      <Info stars={stars} forks={forks} reviews={reviews} rating={rating} />
+        <View style={styles.contentContainer}>
+          <Text
+            style={styles.nameText}
+            fontWeight="bold"
+            fontSize="subheading"
+            numberOfLines={1}
+          >
+            {fullName}
+          </Text>
+          <Text style={styles.descriptionText} color="textSecondary">
+            {description}
+          </Text>
+          {language ? (
+            <View style={styles.languageContainer}>
+              <Text style={styles.languageText}>{language}</Text>
+            </View>
+          ) : null}
+        </View>
+      </View>
+      <View style={styles.bottomContainer}>
+        <CountItem count={stargazersCount} label="Stars" />
+        <CountItem count={forksCount} label="Forks" />
+        <CountItem count={reviewCount} label="Reviews" />
+        <CountItem count={ratingAverage} label="Rating" />
+      </View>
     </View>
-);
-
-
-const RepositoryItem = ({ name, description, language, stars, forks, reviews, rating, image }) => (
-  <View style={styles.container}>
-    <Image style={styles.avatar} source={{ uri: image }} />
-    <Header name={name} description={description} language={language} stars={stars} forks={forks} reviews={reviews} rating={rating}/>
-  </View>
-);
+  );
+};
 
 export default RepositoryItem;
