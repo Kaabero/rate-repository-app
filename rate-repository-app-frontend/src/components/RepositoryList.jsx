@@ -20,8 +20,17 @@ export const RepositoryListContainer = ({ repositories }) => {
       data={repositoryNodes}
       ItemSeparatorComponent={ItemSeparator}
       renderItem={({item}) => 
-        <RepositoryItem repository={item} />
-      }
+        <RepositoryItem 
+            name={item.fullName} 
+            description={item.description} 
+            language={item.language} 
+            stars={item.stargazersCount} 
+            forks={item.forksCount} 
+            reviews={item.reviewCount} 
+            rating={item.ratingAverage}
+            image={item.ownerAvatarUrl}
+        />
+        }
       keyExtractor={item => item.id}
     />
   );
