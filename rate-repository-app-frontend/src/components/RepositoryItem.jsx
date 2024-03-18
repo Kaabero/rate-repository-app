@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image, Pressable } from 'react-native';
 import Text from './Text';
 import theme from '../theme';
+import * as Linking from 'expo-linking';
 
 const styles = StyleSheet.create({
   container: {
@@ -20,6 +21,25 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
     borderRadius: 5,
     marginRight: 170
+  },
+
+  gitHubTag: {
+    textAlign: "center",
+    fontSize: 15,
+    fontWeight: "bold",
+    color: "white" 
+  },
+
+  gitHubTagContainer: {
+    marginTop: 10,
+    padding: 5,
+    width: 300,
+    borderWidth: 2,
+    borderRadius: 5,
+    backgroundColor: theme.colors.primary,
+    marginLeft: -75,
+    
+
   },
 
   textContainer: {
@@ -74,22 +94,62 @@ const Info = ({ stars, forks, reviews, rating }) => (
         </View>
 );
 
-const Header = ({ name, description, language, stars, forks, reviews, rating, }) => (    
+const Header = ({ name, description, language, stars, forks, reviews, rating, single, url }) => {
+  return (   
     <View style={styles.textContainer}>
       <Text testID="name" fontWeight='bold' fontSize='subheading'>{name}</Text>
       <Text testID="description" style={styles.title}>{description}</Text>
       <Text testID="language" style={styles.languageTag}>{language}</Text>
 
       <Info stars={stars} forks={forks} reviews={reviews} rating={rating} />
+      {!single ? 
+      <>
+      <Text></Text>
+      </>
+      :
+      <Footer url={url}/>
+      }
+
     </View>
-);
+  )
+};
+
+const Footer = (url) => {
+  
+  return (   
+    <View style={styles.gitHubTagContainer}>
+      <Pressable onPress={() => onPress(url.url)}>
+        <Text style={styles.gitHubTag}>Open in GitHub</Text>
+      </Pressable>
+    </View>
 
 
-const RepositoryItem = ({ name, description, language, stars, forks, reviews, rating, image }) => (
-  <View style={styles.container}>
-    <Image style={styles.avatar} source={{ uri: image }} />
-    <Header name={name} description={description} language={language} stars={stars} forks={forks} reviews={reviews} rating={rating}/>
-  </View>
-);
+  )
+};
+
+const onPress = (url) => {
+  Linking.openURL(url);
+}
+
+
+const RepositoryItem = ({name, description, language, stars, forks, reviews, rating, image, singleRepository, url }) => {
+  
+  return (
+    <View style={styles.container}>
+      <Image style={styles.avatar} source={{ uri: image }} />
+      <Header 
+        name={name} 
+        description={description} 
+        language={language} 
+        stars={stars} 
+        forks={forks} 
+        reviews={reviews} 
+        rating={rating}
+        single={singleRepository}
+        url={url}
+      />
+    </View>
+  )
+};
 
 export default RepositoryItem;

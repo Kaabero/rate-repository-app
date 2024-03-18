@@ -10,8 +10,6 @@ const useRepositories = () => {
   });
 
 
-  console.log('loading', loading)
-  console.log('data', data)
   return { repositories : data? data.repositories: undefined, loading, error };
   
 

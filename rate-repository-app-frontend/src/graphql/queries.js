@@ -1,5 +1,16 @@
 import { gql } from '@apollo/client';
 
+export const GET_REPOSITORY = gql` 
+  query repository($repositoryId: ID!) {
+    repository(id: $repositoryId) {
+      id
+      fullName
+      url
+  }
+}
+`;
+
+
 export const GET_USER = gql`
   query {
     me {
@@ -14,6 +25,7 @@ export const GET_REPOSITORIES = gql`
         repositories {
           edges {
             node {
+              
               id
               fullName
               description
@@ -23,6 +35,7 @@ export const GET_REPOSITORIES = gql`
               ratingAverage
               reviewCount
               ownerAvatarUrl
+              url
             }
           }
         }
