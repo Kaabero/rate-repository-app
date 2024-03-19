@@ -133,7 +133,7 @@ const onPress = (url) => {
 
 
 const RepositoryItem = ({name, description, language, stars, forks, reviews, rating, image, singleRepository, url }) => {
-  
+ 
   return (
     <View style={styles.container}>
       <Image style={styles.avatar} source={{ uri: image }} />

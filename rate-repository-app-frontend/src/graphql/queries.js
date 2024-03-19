@@ -2,12 +2,26 @@ import { gql } from '@apollo/client';
 
 export const GET_REPOSITORY = gql` 
   query repository($repositoryId: ID!) {
-    repository(id: $repositoryId) {
+    repository(id: $id) {
       id
       fullName
       url
+      reviews {
+        edges {
+          node {
+            id
+            text
+            rating
+            createdAt
+            user {
+              id
+              username
+            }
+          }
+        }
+      }
+    }
   }
-}
 `;
 
 
@@ -25,7 +39,6 @@ export const GET_REPOSITORIES = gql`
         repositories {
           edges {
             node {
-              
               id
               fullName
               description
@@ -36,6 +49,20 @@ export const GET_REPOSITORIES = gql`
               reviewCount
               ownerAvatarUrl
               url
+              reviews {
+                edges {
+                  node {
+                    id
+                    text
+                    rating
+                    createdAt
+                    user {
+                      id
+                      username
+                    }
+                  }
+                }
+              }
             }
           }
         }

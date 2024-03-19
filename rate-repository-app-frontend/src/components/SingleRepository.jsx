@@ -2,13 +2,14 @@ import { useParams } from 'react-router-native';
 import useRepositories from '../hooks/useRepositories';
 import RepositoryItem from './RepositoryItem';
 import { useState } from 'react'
-
+import { View } from 'react-native';
+import Reviews from './Reviews';
+import { FlatList } from 'react-native';
 
 
 const SingleRepository = () => {
   const [single] = useState(true)
   const { id } = useParams();
-  console.log('id', id)
   const { repositories } = useRepositories();
 
     
@@ -17,9 +18,13 @@ const SingleRepository = () => {
   : [];
 
   const repository = repositoryNodes.find(r => r.id === id)
-  console.log('repository', repository)
+
+  const reviewNodes = repository.reviews
+  ? repository.reviews.edges.map((edge) => edge.node)
+  : [];
   
   return ( 
+    <View>
     <RepositoryItem 
       name={repository.fullName} 
       description={repository.description} 
@@ -31,8 +36,11 @@ const SingleRepository = () => {
       image={repository.ownerAvatarUrl}
       singleRepository={single}
       url={repository.url}
-     
     />
+    <Reviews reviews={reviewNodes}/>
+    </View>
+    
+    
     
   );
 };
