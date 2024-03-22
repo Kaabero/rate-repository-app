@@ -60,7 +60,11 @@ const AppBar = () => {
     </Link>
     {user.data?.me ?
     <>
+    <Link to="/createReview">
+        <Text style={styles.appBar}>Create a review</Text>
+    </Link>
     <SignOut/>
+    
     </>
     :
     <Link to="/signIn">
