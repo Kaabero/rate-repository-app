@@ -35,37 +35,37 @@ export const GET_USER = gql`
 `;
 
 export const GET_REPOSITORIES = gql`
-    query {
-        repositories {
-          edges {
-            node {
-              id
-              fullName
-              description
-              language
-              forksCount
-              stargazersCount
-              ratingAverage
-              reviewCount
-              ownerAvatarUrl
-              url
-              reviews {
-                edges {
-                  node {
-                    id
-                    text
-                    rating
-                    createdAt
-                    user {
+    query repositories($orderBy: AllRepositoriesOrderBy, $orderDirection: OrderDirection) {
+          repositories(orderBy: $orderBy, orderDirection: $orderDirection) {
+            edges {
+              node {
+                id
+                fullName
+                description
+                language
+                forksCount
+                stargazersCount
+                ratingAverage
+                reviewCount
+                ownerAvatarUrl
+                url
+                reviews {
+                  edges {
+                    node {
                       id
-                      username
+                      text
+                      rating
+                      createdAt
+                      user {
+                        id
+                        username
+                      }
                     }
                   }
                 }
               }
             }
           }
-        }
     }
 `;
 
