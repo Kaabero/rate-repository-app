@@ -4,6 +4,7 @@ import RepositoryItem from './RepositoryItem';
 import { useState } from 'react'
 import { FlatList, View, StyleSheet } from 'react-native';
 import ReviewItem from './ReviewItem';
+import { useDebounce } from 'use-debounce';
 
 
 const styles = StyleSheet.create({
@@ -18,7 +19,10 @@ const ItemSeparator = () => <View style={styles.separator} />;
 const SingleRepository = () => {
   const [single] = useState(true)
   const { id } = useParams();
-  const { repositories } = useRepositories();
+  const [ sortedBy ] = useState({orderBy: 'CREATED_AT', orderDirection: 'DESC'})
+  const [ keyword ] = useState('')
+  const [ searchKeyword ] = useDebounce(keyword, 200);
+  const { repositories } = useRepositories({...sortedBy, searchKeyword});
 
     
   const repositoryNodes = repositories

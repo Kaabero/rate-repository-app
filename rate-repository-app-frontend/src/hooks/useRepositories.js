@@ -3,11 +3,11 @@ import { useQuery } from '@apollo/client';
 
 
 
-const useRepositories = ( {orderBy, orderDirection}) => {
+const useRepositories = ( {orderBy, orderDirection, searchKeyword}) => {
   
   const { data, loading, error } = useQuery(GET_REPOSITORIES, {
     fetchPolicy: 'cache-and-network',
-    variables: { orderBy, orderDirection }
+    variables: { orderBy, orderDirection, searchKeyword }
   });
 
   
