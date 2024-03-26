@@ -81,7 +81,7 @@ const ReviewItem = ({rating, created, text, user }) => {
     <View style={styles.container}>
       <RatingImage rating={rating}/>
       <Header 
-        user={user.username}
+        user={user}
         created={created} 
         text={text}
       />

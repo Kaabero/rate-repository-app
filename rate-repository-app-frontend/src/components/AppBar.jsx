@@ -59,11 +59,14 @@ const AppBar = () => {
     <Link to="/createReview">
         <Text style={styles.appBar}>Create a review</Text>
     </Link>
+    <Link to="/myReviews">
+        <Text style={styles.appBar}>My reviews</Text>
+    </Link>
     <SignOut/>
     
     </>
     ):(
-      <>
+    <>
     
      <Link to="/signIn">
         <Text style={styles.appBar}>Sign in</Text>
@@ -71,7 +74,7 @@ const AppBar = () => {
      <Link to="/signUp">
         <Text style={styles.appBar}>Sign Up</Text>
       </Link>
-      </>
+    </>
     )}
 
     </ScrollView>

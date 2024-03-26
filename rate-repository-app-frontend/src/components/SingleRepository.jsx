@@ -45,7 +45,7 @@ const SingleRepository = () => {
         rating={item.rating} 
         created={item.createdAt} 
         text={item.text} 
-        user={item.user}
+        user={item.user.username}
       />
     }
     keyExtractor={item => item.id}

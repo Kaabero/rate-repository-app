@@ -12,13 +12,13 @@ export const useSignIn = () => {
   const signIn = async (credentials) => {
     console.log('credentials', credentials)
     
-      const data = await mutate({ variables: { credentials } })
-      console.log('token from data', data.data.authenticate.accessToken);
+    const data = await mutate({ variables: { credentials } })
+    console.log('token from data', data.data.authenticate.accessToken);
       
-      await authStorage.setAccessToken(data.data.authenticate.accessToken)
-      apolloClient.resetStore();
+    await authStorage.setAccessToken(data.data.authenticate.accessToken)
+    apolloClient.resetStore();
       
-      return data
+    return data
   };
   return [signIn, result];
 };
